@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba53135a-ab34-41cd-8809-37b75d5a7b6e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="fromTgl" class="java.sql.Timestamp"/>
+	<parameter name="toTgl" class="java.sql.Timestamp"/>
+	<queryString>
+		<![CDATA[SELECT
+     data_pengembalian.`kd_pengembalian` AS data_pengembalian_kd_pengembalian,
+     data_pengembalian.`kd_peminjaman` AS data_pengembalian_kd_peminjaman,
+     detail_pengembalian.`kd_pengembalian` AS detail_pengembalian_kd_pengembalian,
+     detail_pengembalian.`tgl_peminjaman` AS detail_pengembalian_tgl_peminjaman,
+     detail_pengembalian.`tgl_pengembalian` AS detail_pengembalian_tgl_pengembalian,
+     detail_pengembalian.`id` AS detail_pengembalian_id,
+     detail_pengembalian.`nama_barang` AS detail_pengembalian_nama_barang,
+     detail_pengembalian.`stok` AS detail_pengembalian_stok
+FROM
+     `data_pengembalian` data_pengembalian INNER JOIN `detail_pengembalian` detail_pengembalian ON data_pengembalian.`kd_pengembalian` = detail_pengembalian.`kd_pengembalian`
+WHERE
+     detail_pengembalian.tgl_pengembalian >=$P{fromTgl} AND detail_pengembalian.tgl_pengembalian <=$P{toTgl} ORDER BY detail_pengembalian.id ASC]]>
+	</queryString>
+	<field name="data_pengembalian_kd_pengembalian" class="java.lang.Integer"/>
+	<field name="data_pengembalian_kd_peminjaman" class="java.lang.Integer"/>
+	<field name="detail_pengembalian_kd_pengembalian" class="java.lang.Integer"/>
+	<field name="detail_pengembalian_tgl_peminjaman" class="java.sql.Timestamp"/>
+	<field name="detail_pengembalian_tgl_pengembalian" class="java.sql.Timestamp"/>
+	<field name="detail_pengembalian_id" class="java.lang.Integer"/>
+	<field name="detail_pengembalian_nama_barang" class="java.lang.String"/>
+	<field name="detail_pengembalian_stok" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="66" backcolor="#000000" uuid="207ccdfc-e23d-487b-87cd-5d68489224f4"/>
+				<staticText>
+					<reportElement style="Title" x="0" y="0" width="370" height="66" uuid="df6699c2-3337-4b2d-8d28-37c536c9d556"/>
+					<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+					<textElement verticalAlignment="Bottom">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Laporan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" x="370" y="37" width="316" height="29" uuid="d5b9dab0-b6cf-4a90-8079-25f56e315365"/>
+					<textElement textAlignment="Right">
+						<font size="22" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Pengembalian]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="66" width="802" height="44" forecolor="#000000" backcolor="#CC0000" uuid="7d03f227-b656-4bf8-9a7c-ca16703cb1c9"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="299" y="20" width="71" height="20" forecolor="#FFFFFF" uuid="d8ea673f-0032-4574-8903-be33b09e7777"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{fromTgl}]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="397" y="20" width="63" height="20" forecolor="#FFFFFF" uuid="48f5508a-1f97-4431-a112-19ed6bd9de33"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{toTgl}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="370" y="20" width="27" height="20" forecolor="#FFFFFF" uuid="17063311-4571-4624-b4a1-d5c37775854c"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[s/d]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="358" y="0" width="49" height="20" forecolor="#FFFFFF" uuid="19800e75-af82-4527-852c-fea59e9aae7c"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Periode]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="127" height="18" forecolor="#000000" uuid="221c3445-d53d-46b9-aef5-140bc5261def"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Kode Pengembalian]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="127" y="0" width="126" height="18" forecolor="#000000" uuid="51a44e06-c7cd-495a-b1f7-3e40d188a31b"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Kode Peminjaman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="253" y="0" width="131" height="18" forecolor="#000000" uuid="3a708be9-8370-4918-80df-8955d2d4543a"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tanggal Peminjaman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="384" y="0" width="142" height="18" forecolor="#000000" uuid="1c5815f9-023a-4cbf-95dc-982ea5367fd1"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tanggal Pengembalian]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="526" y="0" width="99" height="18" forecolor="#000000" uuid="5389442a-6a9e-431a-a3ef-bb5537967694"/>
+				<textElement textAlignment="Justified">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Id Peminjam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="625" y="0" width="99" height="18" forecolor="#000000" uuid="1e6d4596-cc9c-414f-8ab7-776b60b3ba2c"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nama Barang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="724" y="0" width="78" height="18" forecolor="#000000" uuid="5ee29005-4007-4f60-b02e-e90428866066"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Unit Kembali]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18" uuid="16d779a9-a37d-4dcc-98a2-a43081ba75e4"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="127" height="18" uuid="56448180-87ff-4cbe-aa2a-3a2769d91818"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{data_pengembalian_kd_pengembalian}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="127" y="0" width="126" height="18" uuid="d8d1a698-9ab7-4b4f-9d56-252b1d1dd533"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{data_pengembalian_kd_peminjaman}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd HH:mm:ss">
+					<reportElement style="Detail" positionType="Float" x="253" y="0" width="131" height="18" uuid="ff0c05c2-59c1-4b33-8883-1eb608973ae6"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detail_pengembalian_tgl_peminjaman}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd HH:mm:ss">
+					<reportElement style="Detail" positionType="Float" x="384" y="0" width="142" height="18" uuid="53016b34-042a-45ab-a109-321a84241ae1"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detail_pengembalian_tgl_pengembalian}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="526" y="0" width="99" height="18" uuid="690fbcb8-32c7-4252-9866-ceaa091f97dc"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detail_pengembalian_id}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="625" y="0" width="99" height="18" uuid="89c52e4e-c82a-4e08-96cc-ff381db25cbf"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detail_pengembalian_nama_barang}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="724" y="0" width="73" height="18" uuid="461c5c7b-a66d-437b-bf5d-4b83f2f739fb"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detail_pengembalian_stok}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="7be165d8-a127-4c05-b4db-7e58a166ad00"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000" uuid="45a5cf55-ffe5-4b9b-8807-e010a9f5f3ad"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" uuid="5b513a93-3db2-45a6-a118-818b09f3feff"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="677" y="3" width="80" height="20" forecolor="#FFFFFF" uuid="6177677c-b386-4baa-9a68-f4aec81c7c15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="3" width="197" height="20" forecolor="#FFFFFF" uuid="1d2529ca-ebc9-44d1-9fd3-521bd7e82ed6"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

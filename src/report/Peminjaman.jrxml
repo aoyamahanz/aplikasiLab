@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c61540eb-149c-4693-beb7-252fd206a4be">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="fromTgl" class="java.sql.Timestamp"/>
+	<parameter name="toTgl" class="java.sql.Timestamp"/>
+	<queryString>
+		<![CDATA[SELECT
+     data_peminjaman.`kd_peminjaman` AS data_peminjaman_kd_peminjaman,
+     data_peminjaman.`tgl_peminjaman` AS data_peminjaman_tgl_peminjaman,
+     detail_peminjaman.`kd_peminjaman` AS detail_peminjaman_kd_peminjaman,
+     detail_peminjaman.`id` AS detail_peminjaman_id,
+     detail_peminjaman.`nama_barang` AS detail_peminjaman_nama_barang,
+     detail_peminjaman.`stok` AS detail_peminjaman_stok,
+     detail_peminjaman.`deskripsi_peminjaman` AS detail_peminjaman_deskripsi_peminjaman,
+     detail_peminjaman.`status` AS detail_peminjaman_status
+FROM
+     `data_peminjaman` data_peminjaman INNER JOIN `detail_peminjaman` detail_peminjaman ON data_peminjaman.`kd_peminjaman` = detail_peminjaman.`kd_peminjaman`
+WHERE
+     data_peminjaman.tgl_peminjaman >=$P{fromTgl} AND data_peminjaman.tgl_peminjaman <=$P{toTgl} ORDER BY detail_peminjaman.kd_peminjaman ASC]]>
+	</queryString>
+	<field name="data_peminjaman_kd_peminjaman" class="java.lang.Integer"/>
+	<field name="data_peminjaman_tgl_peminjaman" class="java.sql.Timestamp"/>
+	<field name="detail_peminjaman_kd_peminjaman" class="java.lang.Integer"/>
+	<field name="detail_peminjaman_id" class="java.lang.Integer"/>
+	<field name="detail_peminjaman_nama_barang" class="java.lang.String"/>
+	<field name="detail_peminjaman_stok" class="java.lang.Integer"/>
+	<field name="detail_peminjaman_deskripsi_peminjaman" class="java.lang.String"/>
+	<field name="detail_peminjaman_status" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="111" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="66" backcolor="#000000" uuid="4b55d471-294a-4f63-9e1e-75e987716c70"/>
+				<staticText>
+					<reportElement style="Title" x="0" y="0" width="370" height="66" uuid="0338ac27-c903-40d6-b2fe-e8a331f66f2f"/>
+					<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+					<textElement verticalAlignment="Bottom">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Laporan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" x="370" y="37" width="316" height="29" uuid="d003fc20-df57-40b9-b9f8-fc00632f3297"/>
+					<textElement textAlignment="Right">
+						<font size="22" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Peminjaman]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="66" width="802" height="45" forecolor="#000000" backcolor="#CC0000" uuid="1afa0e11-7468-41e3-bad1-b02c671dc104"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="211" y="21" width="144" height="20" forecolor="#FFFFFF" uuid="fb467a4a-6e21-4cc1-a525-99d2a2c64fb1"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{fromTgl}]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="377" y="21" width="144" height="20" forecolor="#FFFFFF" uuid="46159c58-ea30-4d93-924d-565b19b64910"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{toTgl}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="355" y="21" width="22" height="20" forecolor="#FFFFFF" uuid="90f2df4f-6850-413b-b217-101032d3926c"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[s/d]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="339" y="1" width="49" height="20" forecolor="#FFFFFF" uuid="b0cd0f6e-0659-4bad-9078-9035a04943af"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Periode]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="113" height="18" forecolor="#000000" uuid="55e14625-e19a-4bb4-aaa6-e60ed32c31da"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Kode Peminjaman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="113" y="0" width="113" height="18" forecolor="#000000" uuid="09fb4af4-e71e-46de-849f-10f6f7fbdd80"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tanggal Peminjaman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="226" y="0" width="113" height="18" forecolor="#000000" uuid="e257be76-2a6a-4c97-8233-29bd7ec1d117"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Id Peminjam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="339" y="0" width="113" height="18" forecolor="#000000" uuid="1ef482e5-a330-45b6-96b7-b38970819380"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nama Barang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="452" y="0" width="113" height="18" forecolor="#000000" uuid="78e33e07-d07c-4461-ad40-bd03d35e3f18"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Unit Dipinjam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="565" y="0" width="113" height="18" forecolor="#000000" uuid="e2d2be4c-23b3-47b0-a90f-06fa337e94d8"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Deskripsi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="678" y="0" width="113" height="18" forecolor="#000000" uuid="2c705f33-b00a-414f-96fe-38d3741b8022"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18" uuid="5f6f9c46-60d9-47ed-b7aa-2a71b3e8fd0a"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="113" height="18" uuid="53625f0c-6f4e-4959-b54e-bf81a81a6d93"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{data_peminjaman_kd_peminjaman}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd">
+					<reportElement style="Detail" positionType="Float" x="113" y="0" width="113" height="18" uuid="9bd2617a-49f3-4e74-a0d2-e91d42067bbc"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{data_peminjaman_tgl_peminjaman}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="226" y="0" width="113" height="18" uuid="9f2315a4-dd72-485d-99b6-27c537db10fd"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detail_peminjaman_id}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="339" y="0" width="113" height="18" uuid="2305998b-d128-4fd1-90a3-de513a4b7370"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detail_peminjaman_nama_barang}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="452" y="0" width="113" height="18" uuid="66d8299f-8d7b-461a-b9df-ce14a2d00ece"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detail_peminjaman_stok}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="565" y="0" width="113" height="18" uuid="974a34c8-2f9b-4c34-adec-0c755f5f4ca5"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detail_peminjaman_deskripsi_peminjaman}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="678" y="0" width="113" height="18" uuid="9a758edc-e85f-4ee3-91bb-5cad79a863a9"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detail_peminjaman_status}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="ccd89a0f-f96e-42a9-9df9-9fc4a524c4ce"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="4" width="802" height="1" uuid="30996f69-4212-44bf-9840-d9f91e3fef6a"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="26" forecolor="#D0B48E" backcolor="#000000" uuid="65b7d94d-f4a6-423a-8da7-a46862cfec0e"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" uuid="d2a1dbe5-2baa-4802-aa3c-639a37982c51"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="677" y="3" width="80" height="20" forecolor="#FFFFFF" uuid="45294e91-eb11-4681-a0fc-8d26e28c4abe"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="3" width="197" height="20" forecolor="#FFFFFF" uuid="ea78694f-ac6f-4de1-9be3-dee851c2cedd"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
