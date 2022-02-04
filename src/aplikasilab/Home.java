@@ -287,18 +287,18 @@ public class Home extends javax.swing.JFrame {
             stm1.executeUpdate();
             
             //selected
-            int kd_pengembalian=0;
+            String kd_pengembalian = "sudah kembali";
             String sqlSelect = "select max(kd_pengembalian) from data_pengembalian";
             Statement select = conn.createStatement();
             ResultSet rs1 = select.executeQuery(sqlSelect);
             while(rs1.next()){
-                kd_pengembalian=rs1.getInt(1);
+                kd_pengembalian=rs1.getString(1);
             }
             //insert detail_pengembalian
             
             String sqlsave2 = "insert into detail_pengembalian(kd_pengembalian, tgl_peminjaman, id, nama_barang, stok) values (?,?,?,?,?)";
             PreparedStatement stm2 = conn.prepareStatement(sqlsave2);
-            stm2.setInt(1, kd_pengembalian);
+            stm2.setString(1, kd_pengembalian);
             stm2.setTimestamp(2, (Timestamp) tablePeminjaman.getValueAt(row, 1));
             stm2.setInt(3, (int) tablePeminjaman.getValueAt(row, 2));
             stm2.setString(4, tablePeminjaman.getValueAt(row, 3).toString());
@@ -307,11 +307,11 @@ public class Home extends javax.swing.JFrame {
             
             //update status di data_peminjaman
             
-            int sts = 1;
+            String sts = "sudah kembali";
             String sql1 = "update detail_peminjaman set status=? where kd_peminjaman=? and nama_barang=?";
             
                 PreparedStatement statement = conn.prepareStatement(sql1);
-                statement.setInt(1, sts);
+                statement.setString(1, sts);
                 statement.setInt(2, Integer.parseInt(tablePeminjaman.getValueAt(row, 0).toString()));
                 statement.setString(3, tablePeminjaman.getValueAt(row, 3).toString());
                 statement.executeUpdate();
